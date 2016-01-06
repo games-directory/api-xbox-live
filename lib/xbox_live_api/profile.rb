@@ -17,9 +17,15 @@ class XboxLiveApi
     attr_reader :preferred_color_url
     # @return [Fixnum] the number of years the user has been on Xbox Live
     attr_reader :tenure_level
+    # @return [:String] bio of user
+    attr_reader :bio
+    # @return [:String] motto of user
+    attr_reader :motto
+    # @return [:String] location of user
+    attr_reader :location
 
     def initialize(id: nil, gamertag: nil, gamerscore: nil, gamer_picture: nil, account_tier: nil,
-                   xbox_one_rep: nil, preferred_color_url: nil, tenure_level: nil)
+                   xbox_one_rep: nil, preferred_color_url: nil, tenure_level: nil, motto: nil, bio: nil, location: nil)
       @id = id
       @gamertag = gamertag
       @gamerscore = gamerscore
@@ -28,6 +34,9 @@ class XboxLiveApi
       @xbox_one_rep = xbox_one_rep
       @preferred_color_url = preferred_color_url
       @tenure_level = tenure_level
+      @motto = motto
+      @bio = bio
+      @location = location
     end
 
     def ==(o)

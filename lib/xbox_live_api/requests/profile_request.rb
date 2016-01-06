@@ -16,7 +16,7 @@ class XboxLiveApi
       def make_request(user_id)
         url = 'https://profile.xboxlive.com/users/batch/profile/settings'
         params = {
-            'settings' => %w(Gamerscore Gamertag GameDisplayPicRaw AccountTier XboxOneRep PreferredColor TenureLevel),
+            'settings' => %w(Gamerscore Gamertag GameDisplayPicRaw AccountTier XboxOneRep PreferredColor TenureLevel Motto Bio Location),
             'userIds' => [user_id]
         }
         HttpSessionGateway.new.post_json(url, header: header_for_version(Version::XBOX_ONE), body: params).body
@@ -33,7 +33,11 @@ class XboxLiveApi
                     account_tier: settings_hash['AccountTier'],
                     xbox_one_rep: settings_hash['XboxOneRep'],
                     preferred_color_url: settings_hash['PreferredColor'],
-                    tenure_level: settings_hash['TenureLevel'].to_i)
+                    tenure_level: settings_hash['TenureLevel'].to_i,
+                    motto: settings_hash['Motto'],
+                    bio: settings_hash['Bio'],
+                    location: settings_hash['Location']
+                    )
       end
 
       def collect_settings(settings)

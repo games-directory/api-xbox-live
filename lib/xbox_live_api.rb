@@ -67,13 +67,6 @@ class XboxLiveApi
     Requests::XuidRequest.new(@session_info.token).for(gamertag)
   end
 
-  # @param gamertag to get profile for
-  # @return [XboxLiveApi::Profile] profile information for the given gamertag
-  def get_profile_from_gamer_tag(gamertag)
-    user_id = get_xuid(gamertag)
-    get_profile(xuid) if user_id
-  end
-
   # @param title_id [String] xbox live title id for game title
   # @param user_id [String] user_id to get title history for, defaults to session_info user_id
   # @return [XboxLiveApi::Game] given users stats for given title

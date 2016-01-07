@@ -2,6 +2,14 @@
 
 This project follows [Semantic Versioning](http://semver.org/)
 
+## 0.3.0 - 2016-01-07
+- Added optional user_id param to the following XboxLiveApi methods
+	- get_profile
+	- get_xbox_one_games
+	- get_xbox_360_games
+- Added `XboxLiveApi.get_xuid`
+- Added `XboxLiveApi.get_title_history`
+
 ## 0.2.0 - 2015-09-23
 - Added documentation for all public objects and interfaces
 - Added `XboxLiveApi.with_session_info`

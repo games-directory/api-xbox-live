@@ -9,6 +9,7 @@ This project follows [Semantic Versioning](http://semver.org/)
 	- get_xbox_360_games
 - Added `XboxLiveApi.get_xuid`
 - Added `XboxLiveApi.get_title_history`
+- Added `XboxLiveApi.session_expired?`
 
 ## 0.2.0 - 2015-09-23
 - Added documentation for all public objects and interfaces

@@ -29,6 +29,10 @@ class XboxLiveApi
     XboxLiveApi.new(session_info)
   end
 
+  def session_expired?
+    @session_info.expired?
+  end
+
   # @param user_id [String] user_id to get profile for, defaults to session_info user_id
   # @return [XboxLiveApi::Profile] profile information for the given user
   def get_profile(user_id = nil)

@@ -17,7 +17,7 @@ class XboxLiveApi
         access_token = get_access_token(url)
         authenticate(access_token)
         authorize
-        SessionInfo.new(user_id: @xid, gamertag: @gtg, token: @auth_header)
+        SessionInfo.new(user_id: @xid, gamertag: @gtg, token: @auth_header, expires: @expires)
       end
 
       private
@@ -90,7 +90,9 @@ class XboxLiveApi
         }
         resp = @http_gateway.post(url, body: Oj.dump(params), header: {'Content-Type' => 'application/json'})
         json = Oj.load(resp.body)
+        Rails.logger.debug json
         token = json['Token']
+        @expires = json['NotAfter']
         @xid = json['DisplayClaims']['xui'][0]['xid']
         @gtg = json['DisplayClaims']['xui'][0]['gtg']
         @auth_header = "XBL3.0 x=#{@uhs};#{token}"

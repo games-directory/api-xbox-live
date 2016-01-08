@@ -10,6 +10,9 @@ This project follows [Semantic Versioning](http://semver.org/)
 - Added `XboxLiveApi.get_xuid`
 - Added `XboxLiveApi.get_title_history`
 - Added `XboxLiveApi.session_expired?`
+- Added XboxLiveApi::XBLAuthError
+	- raised by HttpSessionGateway::transform_response methods
+	- raised on http status code 401
 
 ## 0.2.0 - 2015-09-23
 - Added documentation for all public objects and interfaces

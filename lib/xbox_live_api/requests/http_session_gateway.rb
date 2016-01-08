@@ -28,12 +28,26 @@ class XboxLiveApi
       private
 
       def transform_response(resp)
+        # Rails.logger.debug resp
+        # Rails.logger.debug resp.status_code.class
+        if resp.status_code == 401
+          raise XBLAuthError
+        end
         HttpResponse.new(resp.body, resp.headers, 200)
       end
 
       def transform_response_json(resp)
+        if resp.status_code == 401
+          raise XBLAuthError
+        end
         HttpResponse.new(Oj.load(resp.body), resp.headers, 200)
       end
     end
   end
+
+  class XBLAuthError < StandardError
+  end
+
 end
+
+

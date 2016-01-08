@@ -90,7 +90,6 @@ class XboxLiveApi
         }
         resp = @http_gateway.post(url, body: Oj.dump(params), header: {'Content-Type' => 'application/json'})
         json = Oj.load(resp.body)
-        Rails.logger.debug json
         token = json['Token']
         @expires = json['NotAfter']
         @xid = json['DisplayClaims']['xui'][0]['xid']

@@ -40,9 +40,30 @@ class XboxLiveApi
     Requests::ProfileRequest.new(@session_info.token).for(user_id)
   end
 
+  def get_presence(user_id = nil)
+    user_id ||= @session_info.user_id
+    Requests::PresenceRequest.new(@session_info.token).for(user_id)
+  end
+
   # @return [Array<XboxLiveApi::Profile>] all friends' profiles for the current user
-  def get_friend_ids
-    Requests::FriendRequest.new(@session_info.token).for(@session_info.user_id)
+  def get_friend_ids(user_id = nil)
+    user_id ||= @session_info.user_id
+    Requests::FriendRequest.new(@session_info.token).for(user_id)
+  end
+
+  def get_game_details(ids = [], user_id = nil)
+    user_id ||= @session_info.user_id
+    Requests::GameDetailsRequest.new(@session_info.token).for(user_id, ids, :canonical)
+  end
+
+  def get_game_details_from_hex(ids = [], user_id = nil)
+    user_id ||= @session_info.user_id
+    Requests::GameDetailsRequest.new(@session_info.token).for(user_id, ids, :hex)
+  end
+
+  def get_game_details_from_search(query, user_id = nil)
+    user_id ||= @session_info.user_id
+    Requests::GameSearchRequest.new(@session_info.token).for(user_id, query)
   end
 
   # @param user_id [String] user_id to get games for, defaults to session_info user_id

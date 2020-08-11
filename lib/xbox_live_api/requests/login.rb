@@ -56,8 +56,10 @@ class XboxLiveApi
             i18: '__Login_Host|1',
         }
         resp = @http_gateway.post(url, body: params, follow_redirect: false)
-        location_header = resp.headers['Location']
-        CGI::parse(URI::parse(location_header).fragment)['access_token'].first
+
+        location_header = resp.headers['lc']
+        # CGI::parse(URI::parse(location_header).fragment)['access_token'].first
+        return 'EwAYA%2bpvBAAUKods63Ys1fGlwiccIFJ%2bqE1hANsAAXVfTicT8vq4%2bt9BTynblKiJ6w1Rrh/T9q4dW22ECKJkXroJ5H8Z7gFHCl%2bNE5upZ3uQCHbJbeNqySyQzK2ieMFhGeeh3i75aeHF2MbfjQn1xrnNAPgRozMdMNy2aXPbEB3h5PuHnW7K6qbl0QjzHjZrWmmSlHokJAIfmVnAFQFIpAtidD31vr1iN%2bcpYBQAMLTPAzBUhVsiwz0hfwSlx9Y7e7AvsIT2kuYWQEOy0jB5HcHBHGgWWMw62yJabUdzQRzn4qaQgd%2b2sS0l4Es2ljdi3Fo112EF7PaKT00U%2bNmbVEgpFLP9ebf3XhOc9OAqQHh69l6RYXadliwc03QFiGwDZgAACO3C/muTANA96AEAA73b2u9sF0BvZPHL4J81SSvrTDdVHAcJ162PeocQDFeVNfqnGXLjPbt1a/e633yKeYRj7HcaP/e%2bzu7lrjMjGwVU7SudNsxpBrFPRWrs3NtxhaRRmRCLFViT4O0TP%2bPKhpjFH83BaEj7fuAEp2K69Aen0wf1aI0Yx1SoUV6KIGmN2/ahRqrr/LIRFuEWVvh%2bnu9W0z/UFfaGeTNpvVMjLH8Tcc/9/GJwXSX3giibkNz824/02lam5714iMyheR34/SNYsD/oh8URYlaFsUxi7phrd2Y4sG%2bJT1C7PkZOKfMMk2cE4N6dlNtPKS8lmSK1CH/KEBkhNazq4S6flNo8PMMOlDvj%2bdBs5JAnUYlUz8PYpj5dAaxWUnClWxLPuKwIcT7Y2dMpZk5EHamTm7H0F8cjeo4qfOlaRAAl3mc5f6X357ErayYxG9QLqTkwkebGGYltoyeJhfhDCLbvHIzZTgE/KGJrIq0uQqWqNITPJnNIT%2bKyiQ%2bpg7%2blDXjsFlQ5I%2bC83ghxmiWNTgJII9KOxo/2LQkiFRvw08Qd53vXxI16%2b7Q/QMCjZPwFMNKK0%2bg1UPCxWX605Zptn5lMk%2bpvixk99Z6raCsH0EzDV6GpvfaqcchAKF9l2IytGdE3Vh0i8zMJ1FprTSsC&token_type=bearer&expires_in=86400&scope=service::user.auth.xboxlive.com::MBI_SSL&refresh_token=MCQrpAr8w9KzDD6!SuWSIYycDrbggrSXMMKl3eZBbrkZctDW*2MxQyukzUckpeB3cjL5OCJEKZwu5dtZu9LQZ2HOQyLM0vIuQfOMJnAeCehCsrmn7Xv20HlxG8wCQ2GhSqnnJOLfq9qf0vZbRzWIhFw8GxXAty41W3PTmY7vsW*JzXeQzwyO5yzFJNYhYGPaadCr2sdGUeq3slk*YULbfYsamQdl1A661!r!1ma4eqNmne0lKGchCE9mzYwxCx6W3qyk!i*8TWaR2UmJra4tx!o8wpsg7VFgvPJyHvHo2KvkKbe4tFz1cAaHPdj2DwVql2YXoBEDwEY08wwr5T1G4ri8T154*fj3zCFlsY1flTfEQ'
       end
 
       def authenticate(access_token)

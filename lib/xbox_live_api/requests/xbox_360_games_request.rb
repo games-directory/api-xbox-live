@@ -5,7 +5,7 @@ class XboxLiveApi
     class Xbox360GamesRequest < GamesRequest
 
       def for(user_id)
-        games = get_game_list_json(user_id, Version::XBOX_360)
+        return get_game_list_json(user_id, Version::XBOX_360)
         # TODO create a parser
         games.collect do |game|
           Game.new(name: game['name'],
@@ -19,7 +19,7 @@ class XboxLiveApi
       end
 
       def for_title(title_id, user_id)
-        json = get_game_json(title_id, user_id, Version::XBOX_360)
+        return get_game_json(title_id, user_id, Version::XBOX_360)
         # TODO create a parser
         games = json.collect do |game|
           Game.new(name: game['name'],

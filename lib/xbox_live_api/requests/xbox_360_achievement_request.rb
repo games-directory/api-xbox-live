@@ -16,12 +16,12 @@ class XboxLiveApi
       private
 
       def get_unlocked_achievements(game, user_id)
-        url = "https://achievements.xboxlive.com/users/xuid(#{user_id})/achievements?titleId=#{game.id}"
+        url = "https://achievements.xboxlive.com/users/xuid(#{user_id})/achievements?titleId=#{game}"
         get_achievements(url)
       end
 
       def get_all_achievements(game, user_id)
-        url = "https://achievements.xboxlive.com/users/xuid(#{user_id})/titleachievements?titleId=#{game.id}"
+        url = "https://achievements.xboxlive.com/users/xuid(#{user_id})/titleachievements?titleId=#{game}"
         get_achievements(url)
       end
 

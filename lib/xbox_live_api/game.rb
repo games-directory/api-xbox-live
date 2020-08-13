@@ -1,21 +1,8 @@
 class XboxLiveApi
   class Game
     class Platform
-      X360 = '1'
-      X360 = '2'
-      X360 = '3'
-      X360 = '15'
-      X360 = '62'
-      X360 = '100'
-      
-      XONE = 'XboxOne'
-      XONE = 'Game'
-      XONE = 'DGame'
-      XONE = 'DDurable'
-      XONE = 'Durango'
-      XONE = 'DConsumable'
-      XONE = 'LiveApp'
-      XONE = 'WindowsOneCore'
+      X360 = ['1', '2', '3', '15', '62', '100']
+      XONE = ['XboxOne', 'Game', 'DGame', 'DDurable', 'Durango', 'DConsumable', 'LiveApp', 'WindowsOneCore']
     end
 
     # @return [Fixnum] the name of the game

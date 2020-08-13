@@ -8,7 +8,7 @@ class XboxLiveApi
     class AchievementRequest < BaseRequest
 
       def for(user_id, game, platform)
-        request = (platform == Game::Platform::XONE ? XboxOneAchievementRequest : Xbox360AchievementRequest)
+        request = Game::Platform::XONE.include?(platform) ? XboxOneAchievementRequest : Xbox360AchievementRequest)
         request.new(@auth_header).for(user_id, game)
       end
     end

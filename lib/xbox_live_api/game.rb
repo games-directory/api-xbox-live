@@ -1,8 +1,21 @@
 class XboxLiveApi
   class Game
     class Platform
-      XBOX_360 = '360'
-      XBOX_ONE = '720'
+      X360 = '1'
+      X360 = '2'
+      X360 = '3'
+      X360 = '15'
+      X360 = '62'
+      X360 = '100'
+      
+      XONE = 'XboxOne'
+      XONE = 'Game'
+      XONE = 'DGame'
+      XONE = 'DDurable'
+      XONE = 'Durango'
+      XONE = 'DConsumable'
+      XONE = 'LiveApp'
+      XONE = 'WindowsOneCore'
     end
 
     # @return [Fixnum] the name of the game
@@ -11,7 +24,7 @@ class XboxLiveApi
     attr_reader :id
     # TODO last_unlock_time
     attr_reader :last_unlock_time
-    # @return [XboxLiveApi::Game::Platform::Xbox_360, XboxLiveApi::Game::Platform::Xbox_One]
+    # @return [XboxLiveApi::Game::Platform::X360, XboxLiveApi::Game::Platform::Xbox_One]
     attr_reader :platform
     # @return [Fixnum] the number of achievements the user has unlocked for this game
     attr_reader :current_achievements

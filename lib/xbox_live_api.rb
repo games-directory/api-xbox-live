@@ -82,8 +82,8 @@ class XboxLiveApi
 
   # @param game [XboxLiveApi::Game] game to get achievements for
   # @return [Array<XboxLiveApi::Achievement>] list of Xbox achievements for the current user and the given game
-  def get_achievements_for(game)
-    Requests::AchievementRequest.new(@session_info.token).for(@session_info.user_id, game)
+  def get_achievements_for(user, game, platform)
+    Requests::AchievementRequest.new(@session_info.token).for(user, game, platform)
   end
 
   # @param gamertag [String] gamertag to get xuid for

@@ -1,7 +1,7 @@
 class XboxLiveApi
   class Game
     class Platform
-      X360 = ['1', '2', '3', '15', '62', '100']
+      X360 = ['1', '2', '3', '15', '62', '100', 'Xbox360Game']
       XONE = ['XboxOne', 'Game', 'DGame', 'DDurable', 'Durango', 'DConsumable', 'LiveApp', 'WindowsOneCore']
     end
 

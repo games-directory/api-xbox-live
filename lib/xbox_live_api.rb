@@ -51,14 +51,14 @@ class XboxLiveApi
     Requests::FriendRequest.new(@session_info.token).for(user_id)
   end
 
-  def get_game_details(ids = [], user_id = nil)
+  def get_game_details(ids = [], platform = '', user_id = nil)
     user_id ||= @session_info.user_id
-    Requests::GameDetailsRequest.new(@session_info.token).for(user_id, ids, :canonical)
+    Requests::GameDetailsRequest.new(@session_info.token).for(user_id, ids, platform, :canonical)
   end
 
-  def get_game_details_from_hex(ids = [], user_id = nil)
+  def get_game_details_from_hex(ids = [], platform = '', user_id = nil)
     user_id ||= @session_info.user_id
-    Requests::GameDetailsRequest.new(@session_info.token).for(user_id, ids, :hex)
+    Requests::GameDetailsRequest.new(@session_info.token).for(user_id, ids, platform, :hex)
   end
 
   def get_game_details_from_search(query, user_id = nil)

@@ -5,7 +5,7 @@ class XboxLiveApi
   module Requests
     class GameDetailsRequest < BaseRequest
 
-      GAME_DETAILS_ENDPOINT ||= 'https://eds.xboxlive.com/media/en-us/details'
+      GAME_DETAILS_ENDPOINT ||= 'https://eds.xboxlive.com/media/en-US/details'
       ENDPOINT_QUERY_FIELDS ||= '
         TitleId
         ReleaseDate
@@ -46,22 +46,30 @@ class XboxLiveApi
         ManualUrl
       '
 
-      def for(user_id, ids, type)
+      def for(user_id, ids, platform, type)
         query = {
           ids:            ids.join(','),
           desired:        ENDPOINT_QUERY_FIELDS.split().join('.'),
-          targetDevices: 'XboxOne',
-          mediaGroup:    'GameType',
-          domain:        'Modern',
           IdType:         (type == :hex ? 'XboxHexTitle' : 'Canonical')
         }
+
+        if platform == 'xbox_360'
+          query[:domain] = 'Xbox360'
+          query[:desiredMediaItemTypes] = 'Xbox360Game'
+        elsif platform == 'xbox_one'
+          query[:targetDevices] = 'XboxOne'
+          query[:mediaGroup] = 'GameType'
+          query[:domain] = 'Modern'
+        else
+          '...'
+        end
 
         response = HttpSessionGateway.new.get(GAME_DETAILS_ENDPOINT, query: query, header: eds_header_for_version())
 
         if ids.size > 1
-          return JSON.parse(response.body)['Items']
+          return JSON.parse(response.body).dig('Items')
         else
-          return JSON.parse(response.body)['Items'][0]
+          return JSON.parse(response.body).dig('Items', 0)
         end
       end
     end

@@ -11,7 +11,8 @@ class XboxLiveApi
     # @return [DateTime] the time of the token expiration
     attr_reader :expires
 
-    def initialize(user_id: nil, gamertag: nil, token: nil, expires: nil)
+    def initialize(issued_at: nil, user_id: nil, gamertag: nil, token: nil, expires: nil)
+      @issued_at = DateTime.parse(issued_at)
       @user_id = user_id
       @gamertag = gamertag
       @token = token

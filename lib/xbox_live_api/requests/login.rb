@@ -47,8 +47,8 @@ class XboxLiveApi
       end
 
       def oauth2_token_request()
-        client_id =
-        client_secret = 
+        # client_id = ''
+        # client_secret = ''
 
         params = {
           client_id: client_id,
@@ -62,15 +62,15 @@ class XboxLiveApi
 
         puts url
         puts 'Please input your code: '
-        code = gets.strip
+        code = gets
 
         request = self.class.post("https://login.live.com/oauth20_token.srf",
           body: {
             grant_type: 'authorization_code',
-            code: code,
             client_id: client_id,
-            client_secret: client_secret,
+            # client_secret: client_secret,
             scope: DEFAULT_SCOPES.join(' '),
+            code: code,
             redirect_uri: 'http://localhost:3000/my_auth/xbox'
           }
         ).parsed_response
@@ -84,7 +84,7 @@ class XboxLiveApi
           user_id: request['user_id'],
           issued_at: DateTime.now.to_s
         }
-        puts request
+
         authenticate(request['access_token'])
       end
 
@@ -149,27 +149,29 @@ class XboxLiveApi
       # end
 
       def authenticate(access_token)
-        body = {
-          'RelyingParty' => 'http://auth.xboxlive.com',
-          'TokenType' => 'JWT',
-          'Properties' => {
-            'AuthMethod' => 'RPS',
-            'SiteName' => 'user.auth.xboxlive.com',
-            'RpsTicket' => access_token
+        request = self.class.post('https://user.auth.xboxlive.com/user/authenticate',
+          body: {
+            'RelyingParty' => 'http://auth.xboxlive.com',
+            'TokenType' => 'JWT',
+            'Properties' => {
+              'AuthMethod' => 'RPS',
+              'SiteName' => 'user.auth.xboxlive.com',
+              'RpsTicket' => "d=#{ access_token }"
+            }
+          }.to_json,
+
+          headers: {
+            'Content-Type' => 'application/json',
+            'x-xbl-contract-version' => '1'
           }
-        }
-        headers = {
-          'x-xbl-contract-version' => '1'
-        }
+        )
 
-        url = 'https://user.auth.xboxlive.com/user/authenticate'
-        request = self.class.post(url, body: body, headers: headers, debug_output: $stdout)
-
-        binding.pry
+        puts request
         token = request['Token']
         uhs = request.dig('DisplayClaims', 'xui', 0, 'uhs')
 
-        return token, uhs
+        authorize(token, uhs)
+        # return token, uhs
       end
 
       def authorize(token, uhs)

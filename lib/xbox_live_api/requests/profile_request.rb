@@ -1,6 +1,4 @@
 require 'xbox_live_api/requests/base_request'
-require 'xbox_live_api/profile'
-require 'oj'
 
 class XboxLiveApi
   module Requests
@@ -8,14 +6,8 @@ class XboxLiveApi
       PROFILE_V1_ENDPOINT ||= 'https://profile.xboxlive.com/users/batch/profile/settings'
       PROFILE_V2_ENDPOINT ||= 'https://peoplehub.xboxlive.com/users/%s/batch/profile/settings'
 
-      def for(user_id)
-        resp = make_request(user_id)
-        handle_response(resp, user_id)
-      end
-
-    private
-
-      def make_request(user_id)
+      def for(user_ids)
+        user_ids.class.name
         params = {
           'settings' => %w(
             AccountTier AppDisplayName AppDisplayPicRaw
@@ -33,29 +25,42 @@ class XboxLiveApi
             XboxOneRep
             Watermarks
           ),
-          'userIds' => [user_id]
+          'userIds' => user_ids
         }
 
-        HttpSessionGateway.new
-         .post_json(PROFILE_V1_ENDPOINT,
-           header: header_for_version(Version::XBOX_ONE),
-           body: params
-         ).body
+        profiles = []
+
+        request = HttpSessionGateway.new
+          .post_json(PROFILE_V1_ENDPOINT,
+            header: header_for_version(Version::XBOX_ONE),
+            body: params
+          )
+
+        response = request.body
+
+        JSON.parse(response)['profileUsers'].each do |remote_profile|
+          profile = collect_settings(remote_profile['settings'])
+
+          profile['id'] = remote_profile['id']
+          profile['isSponsoredUser'] = remote_profile['isSponsoredUser']
+
+          profiles << profile
+        end
+
+        profiles.length > 1 ? profiles : profiles.first
       end
 
-      def handle_response(resp, user_id)
-        json = Oj.load(resp)
-        settings = json['profileUsers'].first['settings']
-        settings_hash = collect_settings(settings)
+    private
 
-        return json
-      end
-
+      # Transform the hash returned by the API into a key => value object
+      #
       def collect_settings(settings)
         settings_hash = {}
+
         settings.each do |setting|
           settings_hash.store(setting['id'], setting['value'])
         end
+
         settings_hash
       end
     end

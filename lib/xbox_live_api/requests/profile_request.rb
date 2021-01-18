@@ -7,7 +7,9 @@ class XboxLiveApi
       PROFILE_V2_ENDPOINT ||= 'https://peoplehub.xboxlive.com/users/%s/batch/profile/settings'
 
       def for(user_ids)
-        user_ids.class.name
+        raise '"user_ids" must be an array' unless user_ids.is_a?(Array)
+        raise '"user_ids" must contain at least on xuid' if user_ids.empty?
+
         params = {
           'settings' => %w(
             AccountTier AppDisplayName AppDisplayPicRaw

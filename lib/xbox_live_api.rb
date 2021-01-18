@@ -2,42 +2,24 @@ require 'kernel'
 require 'xbox_live_api/requests'
 
 class XboxLiveApi
-
-  # @return [XboxLiveApi::SessionInfo]
   attr_reader :session_info
-
-  # Creates a new XboxLiveApi instance by logging in a user
-  # @param email [String] Windows Live account email to use to login
-  # @param password [String] associated password to use to login
-  # @return [XboxLiveApi]
-  # @example
-  #   api = XboxLiveApi.login('example@example.com', 'password123')
-  # @note Emails and passwords are not stored, logged, or otherwise used in any
-  #   manner other than to securely login to Xbox Live
-  def self.login(email, password)
-    session_info = Requests::Login.new(email, password).execute
-    XboxLiveApi.new(session_info)
-  end
-
-  # Creates a new XboxLiveApi instance with session info from a prior instance
-  # @param session_info [XboxLiveApi::SessionInfo] session info from a prior XboxLiveApi instance
-  # @return [XboxLiveApi]
-  # @example
-  #   api = XboxLiveApi.login('example@example.com', 'password123')
-  #   api2 = XboxLiveApi.with_session_info(api.session_info)
-  def self.with_session_info(session_info)
-    XboxLiveApi.new(session_info)
-  end
 
   def session_expired?
     @session_info.expired?
   end
 
+  def initialize(token = nil, user_id = nil)
+    @session_info = OpenStruct.new(
+      token: token || 'XBL3.0 x=17707809191848599152;eyJlbmMiOiJBMTI4Q0JDK0hTMjU2IiwiYWxnIjoiUlNBLU9BRVAiLCJjdHkiOiJKV1QiLCJ6aXAiOiJERUYiLCJ4NXQiOiIxZlVBejExYmtpWklFaE5KSVZnSDFTdTVzX2cifQ.FRef41A8FxMMOuPsJoT5ENNQBbXyJIO5nOH9QykgnE5xvYENc9pabryFdHIzqUMPJZlwMYrqcarrpTSojpqSbTTIlLl74zviRFklFAFIrW8v-R_KW0kbpyVeR5suUqdPW_r0pZRyrD-zE5Kk4JbuOCI8tcUG_MGi6KHSJ7TpiyA.b30D_jNr_8wyg9GoLx3Nkg.YKKEEBBvu9pKDVpd0eV_iBAEi-BMUJvUsI7opGl3Ft2we-0Kkg0vtFc8veAM7uhy1OC-g64C1j2FOI50sy-Qwkpmu1g0El7TANgeu8ElGdiTVdzDDpB8PdzKZgZqHO5NUGwNP-8-KQ9x4yVFi2z_80f-imA2mvNsI0Npc4aR3waEYbqQz3l9UDfs9QfF3TBPs8prFY2vANXFxmx08RmJvkiazmRuU9wTtmswsRKQFQSywDQpeoPBeSgw5cqVfNFIh7hUO9q_i3gGHT6yY71_3QtehSvTq8y-EJUlZ4zsnfTsea8WNC5yld11LcpPI5brVZ_00GdtnLgcUCDFPWgWbQkZCmYr7Rt_iYOlCqnhZxo0TZjQ-e0_KzeY84jokrPVTVyWxNhyilWPEtRkJZBuzQWzvxo0Sylz8QjtRnuKsldUk_rpB1-82fF8ZQEyFdG7P2KSHMwqysQhkP7ECsDrT960bq80jpx38v76D1faYTKtH4uQDfq2fPICsg37SE5RFW2xvDMzCLfq2oNCzodzwz1VIungHMH86oPgodlBBVzjVVN-hecSx0qlkmW26RqhVakelRpnHuDJP0patjRlKa3ohH10p4oLyqDWCkKc2t2Dg-v8zIJ1J9PK1KpB87PARbCh7WrG25LOrKtoWSLj_vuLssBccCp_Re1i_YTihiEeFtdE1XPVB6_VmgIhP03Z7srRO3rnSpGdpD1pxdyfeh9N9vdYPvygt3b1cXswJ3cZeYhNHScgTVJZeTM2JNgso5fj1dqUkn8yDVkHCpJWW0zPkuVzy5mQ7X63Dc5Uqinx6Xvmh7QbvIBzvLroMMq6Abpepj2GCi2-AwicrjM4saJVnYXABEChJfXIT1uOGkrAP1NvptgQ2e4BI3-y5NM4bQL_CiFa5u6g7tYRm-7-V0nyVoFkL9aWXaTqFnfSNqG1KAgjuijEgOV33lQ7PN1v4lhXLD7uRGF7CTkw598iaSvbUB77V4lM16npfDN7j8fkhM7O_uX-ApXspDw1A76g_gul6-znfQjoBLVAH6oHo3JV6Mh_P8Llul6zGWhyJGxY8gSH9MeB2AXakyemVkFV96NKsadyAnhSzwE0O8fqvYbOpOLlfdLnfDMenncRBn3GVhqrllzXS1vWc6CSu684dIhiQl2XnipQ5A06_Xg0w5PP6DL6OPqvUX-G8NMFUWZFT9recqrPx-JPZx1WFGaW3RjDmNQXeh_DEqagbc3fuWALF6e3M1D11OiDb9aMOLt9HD-JHpuo4F4xOESk2N_clyY7uWRI0lBB8Uw2Z0h6mLv2BQJmpocsbfvpS0bdfCrDLw-QAtUi7Ea4E0TMCqQPnY1G_dnugDeWvqpFwGgnN5IsUj4tr6ublIu61efieYM3s3TFOLu9hQA8mCAVKhK_Qq5CU5t4_omMMt5LJc3TXfpDONhiHVy3AvXu49u9Ovxs8tFJL8j5Vt-1D750rNbetCpO4vO76YyxnsTfLURynOuKXNwaPJvnKWlXs3zgX64.FTSGbHXCTLgOYQrVN0G5NKubNFvlZhcSDSV1oTd_9JA',
+      user_id: user_id || '2533274897800701'
+    )
+  end
+
   # @param user_id [String] user_id to get profile for, defaults to session_info user_id
   # @return [XboxLiveApi::Profile] profile information for the given user
-  def get_profile(user_id = nil)
-    user_id ||= @session_info.user_id
-    Requests::ProfileRequest.new(@session_info.token).for(user_id)
+  def get_profile(user_ids = [])
+    user_ids = (user_ids.empty? ? (user_ids << @session_info.user_id) : user_ids)
+    Requests::ProfileRequest.new(@session_info.token).for(user_ids)
   end
 
   def get_presence(user_id = nil)
@@ -98,11 +80,5 @@ class XboxLiveApi
   def get_title_history(title_id, user_id = nil)
     user_id ||= @session_info.user_id
     Requests::Xbox360GamesRequest.new(@session_info.token).for_title(title_id, user_id)
-  end
-
-  private
-
-  def initialize(session_info)
-    @session_info = session_info
   end
 end

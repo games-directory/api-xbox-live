@@ -17,6 +17,7 @@ class XboxLiveApi
 
       def post(uri, query: nil, body: nil, header: nil, follow_redirect: nil)
         resp = @client.post(uri, query: query, body: body, header: header, follow_redirect: follow_redirect)
+        puts resp.inspect
         transform_response(resp)
       end
 

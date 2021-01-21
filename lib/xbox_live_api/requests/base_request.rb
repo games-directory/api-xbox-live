@@ -2,9 +2,9 @@ class XboxLiveApi
   module Requests
     class BaseRequest
       class Version
-        XBOX_360 = 1 # 3
-        XBOX_ONE = 2 # 4
-        WINDOWS  = 3.2
+        XBOX_360 ||= 1 # 3
+        XBOX_ONE ||= 2 # 4
+        WINDOWS  ||= 3.2
       end
 
       def initialize(auth_header)

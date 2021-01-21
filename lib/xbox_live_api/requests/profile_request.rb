@@ -4,7 +4,8 @@ class XboxLiveApi
   module Requests
     class ProfileRequest < BaseRequest
       PROFILE_V1_ENDPOINT ||= 'https://profile.xboxlive.com/users/batch/profile/settings'
-      PROFILE_V2_ENDPOINT ||= 'https://peoplehub.xboxlive.com/users/%s/batch/profile/settings'
+      PROFILE_V2_ENDPOINT ||= 'https://peoplehub.xboxlive.com/users/xuid(%s)/people/batch'
+      PROFILE_V3_ENDPOINT ||= 'https://peoplehub.xboxlive.com/users/me/people/social'
 
       def for(user_ids)
         raise '"user_ids" must be an array' unless user_ids.is_a?(Array)

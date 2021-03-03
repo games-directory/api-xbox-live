@@ -15,8 +15,18 @@ class XboxLiveApi
     )
   end
 
+  # NEW
+  
+  def titles(xuid, offset: 0, limit: 1000)
+    Requests::TitleHubRequest.new(@session_info.token).titles(xuid, offset, limit)
+  end
+  
+  # NEW
+
+  # DEPRECATE
   # @param user_id [String] user_id to get profile for, defaults to session_info user_id
   # @return [XboxLiveApi::Profile] profile information for the given user
+
   def get_profile(user_ids = [])
     user_ids = (user_ids.empty? ? (user_ids << @session_info.user_id) : user_ids)
     Requests::ProfileRequest.new(@session_info.token).for(user_ids)

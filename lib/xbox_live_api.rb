@@ -17,8 +17,16 @@ class XboxLiveApi
 
   # NEW
   
+  # => XboxLiveApi.new(token, user_id).titles
   def titles(xuid, offset: 0, limit: 1000)
     Requests::TitleHubRequest.new(@session_info.token).titles(xuid, offset, limit)
+  end
+
+  # => XboxLiveApi.new(token, user_id).people.me(xuid)
+  # => XboxLiveApi.new(token, user_id).people.friends()
+  #
+  def people(xuid, offset: 0, limit: 1000)
+    Requests::PeopleHubRequest.new(@session_info.token)
   end
   
   # NEW

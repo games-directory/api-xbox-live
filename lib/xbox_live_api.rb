@@ -34,6 +34,12 @@ class XboxLiveApi
   def videos(xuid, offset: nil, limit: 1000)
     Requests::GameClipsMetadataRequest.new(@session_info.token)
   end
+
+  # => XboxLiveApi.new(token, user_id).videos
+  #
+  def screenshots(xuid, offset: nil, limit: 1000)
+    Requests::ScreenshotsMetadataRequest.new(@session_info.token)
+  end
   
   # NEW
 

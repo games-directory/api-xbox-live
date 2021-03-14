@@ -6,7 +6,6 @@ class XboxLiveApi
     class GameClipsMetadataRequest < BaseRequest
       include HTTParty
 
-      debug_output $stdout
       base_uri 'https://gameclipsmetadata.xboxlive.com'
       
       # @public

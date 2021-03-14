@@ -1,6 +1,7 @@
 require 'xbox_live_api/requests/people_hub_request'
 require 'xbox_live_api/requests/title_hub_request'
 require 'xbox_live_api/requests/game_clips_metadata_request'
+require 'xbox_live_api/requests/screenshots_metadata_request'
 
 require 'xbox_live_api/requests/profile_request'
 require 'xbox_live_api/requests/friend_request'

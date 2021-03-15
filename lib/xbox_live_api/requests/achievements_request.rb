@@ -28,7 +28,7 @@ class XboxLiveApi
         self.class.get("/xuid(#{ xuid })/achievements",
           headers: {
             'Authorization' => @auth_header,
-            'x-xbl-contract-version' => (platform == :xone ? 4 : 3)
+            'x-xbl-contract-version' => (platform == :xone ? 4 : 3).to_s
           },
           params: {
             maxItems: limit
@@ -54,7 +54,7 @@ class XboxLiveApi
         self.class.get("/xuid(#{ xuid })/achievements/#{ scid }/#{ achievement_id }",
           headers: {
             'Authorization' => @auth_header,
-            'x-xbl-contract-version' => (platform == :xone ? 2 : 1)
+            'x-xbl-contract-version' => (platform == :xone ? 2 : 1).to_s
           }
         )
       end

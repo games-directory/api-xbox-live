@@ -16,28 +16,23 @@ class XboxLiveApi
   end
 
   # NEW
-  
-  # => XboxLiveApi.new(token, user_id).titles
+  def people
+    Requests::PeopleHubRequest.new(@session_info.token)
+  end
+
   def titles(xuid, offset: 0, limit: 1000)
     Requests::TitleHubRequest.new(@session_info.token).titles(xuid, offset, limit)
   end
 
-  # => XboxLiveApi.new(token, user_id).people.me(xuid)
-  # => XboxLiveApi.new(token, user_id).people.friends()
-  #
-  def people(xuid, offset: 0, limit: 1000)
-    Requests::PeopleHubRequest.new(@session_info.token)
+  def achievements
+    Requests::AchievementsRequest.new(@session_info.token)
   end
 
-  # => XboxLiveApi.new(token, user_id).videos
-  #
-  def videos(xuid, offset: nil, limit: 1000)
+  def videos
     Requests::GameClipsMetadataRequest.new(@session_info.token)
   end
 
-  # => XboxLiveApi.new(token, user_id).videos
-  #
-  def screenshots(xuid, offset: nil, limit: 1000)
+  def screenshots
     Requests::ScreenshotsMetadataRequest.new(@session_info.token)
   end
   

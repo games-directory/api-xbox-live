@@ -22,7 +22,7 @@ class XboxLiveApi
       # => Xbox User ID (XUID) of the user whose (resource) is being accessed. Must match the XUID of the authenticated user ( not really, you can pass any XUID :) ).
       #
       def all(xuid, platform: :xone, offset: 0, limit: 10000)
-        raise 'Too many, max limit is 10000' if limit.length >= 10001
+        raise 'Too many, max limit is 10000' if limit >= 10001
         
         # https://achievements.xboxlive.com/users/xuid(2533274897800701)/achievements?maxItems=10000
         self.class.get("/xuid(#{ xuid })/achievements",

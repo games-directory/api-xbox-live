@@ -30,7 +30,7 @@ class XboxLiveApi
             'Authorization' => @auth_header,
             'x-xbl-contract-version' => (platform == :xone ? 4 : 3).to_s
           },
-          params: {
+          query: {
             maxItems: limit
           }
         )

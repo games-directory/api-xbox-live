@@ -17,7 +17,7 @@ class XboxLiveApi
             'Authorization' => @auth_header,
             'x-xbl-contract-version' => '5'
           },
-          params: {
+          query: {
             skipItems: skip_items,
             continuationToken: offset,
             maxItems: limit
@@ -33,7 +33,7 @@ class XboxLiveApi
             'Authorization' => @auth_header,
             'x-xbl-contract-version' => '5'
           },
-          params: {
+          query: {
             skipItems: skip_items,
             continuationToken: offset,
             maxItems: limit
@@ -49,7 +49,7 @@ class XboxLiveApi
             'Authorization' => @auth_header,
             'x-xbl-contract-version' => '5'
           },
-          params: {
+          query: {
             skipItems: skip_items,
             continuationToken: offset,
             maxItems: limit
@@ -65,7 +65,7 @@ class XboxLiveApi
             'Authorization' => @auth_header,
             'x-xbl-contract-version' => '5'
           },
-          params: {
+          query: {
             skipItems: skip_items,
             continuationToken: offset,
             maxItems: limit

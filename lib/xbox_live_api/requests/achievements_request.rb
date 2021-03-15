@@ -51,7 +51,7 @@ class XboxLiveApi
       def get(xuid, scid, acheivement_id, platform: :xone)
         
         # https://achievements.xboxlive.com/users/xuid(2533274897800701)/achievements/cb2c0100-03d5-4913-8391-3f20032170b5/1
-        self.class.get("/xuid(#{ xuid })/achievements",
+        self.class.get("/xuid(#{ xuid })/achievements/#{ scid }/#{ achievement_id }",
           headers: {
             'Authorization' => @auth_header,
             'x-xbl-contract-version' => (platform == :xone ? 2 : 1)
